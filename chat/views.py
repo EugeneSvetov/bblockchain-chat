@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.parsers import JSONParser
 from chat.models import Message
+from django.contrib.auth import logout
 from chat.forms import SignUpForm
 from chat.serializers import MessageSerializer, UserSerializer
 
@@ -45,6 +46,12 @@ def message_list(request, sender=None, receiver=None):
             serializer.save()
             return JsonResponse(serializer.data, status=201)
         return JsonResponse(serializer.errors, status=400)
+
+def land(request):
+    return render(request, 'chat/landing.html')
+def out(request):
+    logout(request)
+    return redirect('index')
 
 
 def register_view(request):
